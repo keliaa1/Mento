@@ -1,6 +1,10 @@
+import Logo from "./logo";
 const Footer = () => {
     return ( 
-        <div>Footer</div>
+        <div className="flex items-center w-full p-6 bg-background z-50">
+            <Logo />
+        </div>
+
      );
 }
  
