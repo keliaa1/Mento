@@ -8,18 +8,26 @@ const font = Poppins({
     weight: ["400", "600"]
 });
 const  Logo= () => {
-    return ( 
+    return (
 <div className="hidden md:flex items-center gap-x-2">
     <Image
     src="/logo-black.png"
     height="40"
     width="40"
     alt="Mento"
+    className="dark:hidden"
     />
-    <p className={cn("font-semibold", font.className)}>Mento</p>
+    <Image
+    src="/Logo-white.png"
+    height="40"
+    width="40"
+    alt="Mento"
+    className=" hidden dark:block"
+    />
+    <p className={cn("font-semibold dark:text-white", font.className)} >Mento</p>
 
 </div>
      );
 }
- 
+
 export default Logo;
