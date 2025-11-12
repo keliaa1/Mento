@@ -1,9 +1,10 @@
 "use client";
-
+import Link from "next/link";
 import { Spinner } from "@/components/spinner";
 import { Button } from "@/components/ui/button";
 import { useConvexAuth } from "convex/react";
 import { ArrowRight } from "lucide-react";
+import { SignInButton } from "@clerk/nextjs";
 const Heading = () => {
     const{isAuthenticated, isLoading} = useConvexAuth();
     return (
@@ -13,21 +14,27 @@ const Heading = () => {
 
 
             {isLoading&&(
-                <Spinner />
+                <div className="w-full flex items-center justify-center">
+                <Spinner size="lg" />
+                </div>
             )}
-             {!isAuthenticated && !isLoading &&(
-                 <Button>
-            Try Mento!
-            <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-             )}
+
 
              {isAuthenticated && !isLoading &&(
-                 <Button>
-                    Enter Mento
+                 <Button asChild>
+                    <Link href='/documents'>Enter Mento</Link>
                     <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
              )}
+
+            {!isAuthenticated && !isLoading &&(
+                <SignInButton>
+                    <Button>
+                        Get Mento Free
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                </SignInButton>
+            )}
 
         </div>
      );
