@@ -1,13 +1,14 @@
 "use client";
 
 import { useConvexAuth } from "convex/react";
+import Link from "next/link";
 
 import { Component } from "lucide-react";
 import UseScroll from "@/Hooks/useScroll";
 import { cn } from "@/lib/utils";
 import Logo from "./logo";
 import { ModeToggle } from "@/components/mode-toggle";
-import { SignInButton } from "@clerk/nextjs";
+import { SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/spinner";
 
@@ -31,6 +32,18 @@ const Navbar = () => {
                         <SignInButton mode="modal">
                             <Button >Get Mento Free!</Button>
                         </SignInButton>
+                    </>
+                )}
+
+                {isAuthenticated && !isLoading &&(
+                    <>
+
+                        <Button variant="ghost"><Link href='/documents'>Enter Mento</Link></Button>
+                        <UserButton afterSignOutUrl="/">
+
+                        </UserButton>
+
+
                     </>
                 )}
                 <ModeToggle />
