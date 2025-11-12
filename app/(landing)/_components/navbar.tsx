@@ -1,12 +1,17 @@
 "use client";
 
+import { useConvexAuth } from "convex/react";
+
 import { Component } from "lucide-react";
 import UseScroll from "@/Hooks/useScroll";
 import { cn } from "@/lib/utils";
 import Logo from "./logo";
 import { ModeToggle } from "@/components/mode-toggle";
+import { SignInButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
+    const{isAuthenticated, isLoading} = useConvexAuth();
     const scrolled = UseScroll();
     return (
         <div className={cn(
@@ -14,6 +19,19 @@ const Navbar = () => {
         )}>
             <Logo />
             <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
+                {isLoading &&(
+                    <p>Loading... be patient</p>
+                )}
+                {!isAuthenticated && !isLoading &&(
+                    <>
+                        <SignInButton mode="modal">
+                            <Button variant="ghost">Log in</Button>
+                        </SignInButton>
+                        <SignInButton mode="modal">
+                            <Button >Get Mento Free!</Button>
+                        </SignInButton>
+                    </>
+                )}
                 <ModeToggle />
             </div>
         </div>
