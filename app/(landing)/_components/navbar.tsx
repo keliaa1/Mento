@@ -9,6 +9,7 @@ import Logo from "./logo";
 import { ModeToggle } from "@/components/mode-toggle";
 import { SignInButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/spinner";
 
 const Navbar = () => {
     const{isAuthenticated, isLoading} = useConvexAuth();
@@ -20,7 +21,7 @@ const Navbar = () => {
             <Logo />
             <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
                 {isLoading &&(
-                    <p>Loading... be patient</p>
+                    <Spinner />
                 )}
                 {!isAuthenticated && !isLoading &&(
                     <>
