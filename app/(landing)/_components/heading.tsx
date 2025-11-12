@@ -21,7 +21,7 @@ const Heading = () => {
 
 
              {isAuthenticated && !isLoading &&(
-                 <Button asChild>
+                 <Button >
                     <Link href='/documents'>Enter Mento</Link>
                     <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
