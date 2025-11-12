@@ -27,7 +27,7 @@ const Navbar = () => {
                 {!isAuthenticated && !isLoading &&(
                     <>
                         <SignInButton mode="modal">
-                            <Button variant="ghost">Log in</Button>
+                            <Button asChild variant="ghost">Log in</Button>
                         </SignInButton>
                         <SignInButton mode="modal">
                             <Button >Get Mento Free!</Button>
@@ -38,7 +38,7 @@ const Navbar = () => {
                 {isAuthenticated && !isLoading &&(
                     <>
 
-                        <Button variant="ghost"><Link href='/documents'>Enter Mento</Link></Button>
+                        <Button asChild variant="ghost"><Link href='/documents'>Enter Mento</Link></Button>
                         <UserButton afterSignOutUrl="/">
 
                         </UserButton>
