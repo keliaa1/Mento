@@ -1,5 +1,7 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
+import { PlusCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 const documents = () => {
     const {user}= useUser();
@@ -20,9 +22,13 @@ const documents = () => {
             alt="Mento"
             className="hidden dark:block"
             />
-            <h2 className="text-lg font-medium">
+            <h2 className="text-lg font-medium mb-2">
                 Welcome to {user?.firstName}&apos;s Mento!
             </h2>
+            <Button>
+                <PlusCircle className="h-4 w-4 ml-2" />
+               Create something Mento!
+            </Button>
         </div>
      );
 }
