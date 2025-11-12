@@ -27,7 +27,7 @@ const Navbar = () => {
                 {!isAuthenticated && !isLoading &&(
                     <>
                         <SignInButton mode="modal">
-                            <Button asChild variant="ghost">Log in</Button>
+                            <Button variant="ghost">Log in</Button>
                         </SignInButton>
                         <SignInButton mode="modal">
                             <Button >Get Mento Free!</Button>
