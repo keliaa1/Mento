@@ -1,4 +1,4 @@
-import { ChevronLeft, MenuIcon, PlusCircle, Search } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search,Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, use, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -135,6 +135,11 @@ const handleCreate = ()=>{
           label="Search"
           isSearch
           icon={Search}
+          onClick={()=>{}}
+          />
+          <Item
+          label="Settings"
+          icon={Settings}
           onClick={()=>{}}
           />
           <Item
