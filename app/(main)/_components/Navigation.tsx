@@ -6,13 +6,13 @@ import UserItem from "./user-item";
 import {toast } from "sonner";
 
 import { cn } from "@/lib/utils";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation} from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./Item";
 const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const documents = useQuery(api.document.get);
+
 const create = useMutation(api.document.create);
 
   const isResizingRef = useRef(false);
@@ -150,9 +150,7 @@ const handleCreate = ()=>{
 
         </div>
         <div className="mt-4">
-          {documents?.map((document) => (
-            <p key={document._id}>{document.title}</p>
-          ))}
+         
         </div>
         <div
           onMouseDown={handleMouseDown}
