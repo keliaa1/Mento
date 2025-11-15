@@ -4,6 +4,7 @@ import { ElementRef, use, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserItem from "./user-item";
 import {toast } from "sonner";
+import { DocumentList } from "./Document-list";
 
 import { cn } from "@/lib/utils";
 import { useMutation} from "convex/react";
@@ -150,7 +151,7 @@ const handleCreate = ()=>{
 
         </div>
         <div className="mt-4">
-         
+         <DocumentList />
         </div>
         <div
           onMouseDown={handleMouseDown}
