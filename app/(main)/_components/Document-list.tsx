@@ -2,9 +2,11 @@
 import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Item } from "./Item";
+import { cn } from "@/lib/utils";
+import { FileIcon } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 interface DocumentListProps {
   parentDocumentId?: Id<"documents">;
@@ -24,7 +26,7 @@ export const DocumentList = ({
       [documentId]: !prevExpanded[documentId],
     }));
   };
-  const Documents = useQuery(api.document.getSidebar, {
+  const documents = useQuery(api.document.getSidebar, {
     parentDocument: parentDocumentId,
   });
 
@@ -44,9 +46,34 @@ if (document === undefined){
 }
   return (
     <>
-    <p>
+    <p style={{paddingLeft: level? `${(level*12)+25}px` : "12px"}} className={cn("text-sm hidden font-medium text-muted-foreground",
+      expanded && "last:block",
+      level===0 && "block"
+    )} >
       No pages inside
       </p>
+      {documents && documents.length > 0 && documents.map((document) =>  (
+        <div key={document._id}>
+            <Item
+            id={document._id}
+            onClick={()=>onRedirect(document._id)}
+            label={document.title}
+            icon={FileIcon}
+            documentIcon={document.icon}
+            active={params.documentId === document._id}
+          level={level}
+          onExpand={()=> onExpand(document._id)}
+          expanded={expanded[document._id]}
+            />
+
+            {expanded[document._id] && (
+                <DocumentList
+                parentDocumentId={document._id}
+                level={level + 1}
+                />
+            )}
+        </div>
+      ))}
     </>
   )
 };
