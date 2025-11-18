@@ -48,3 +48,22 @@ export const archive = mutation({
     return document
   },
 });
+export const getSidebar = query({
+  args: {},
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      return [];
+    }
+
+    const userId = identity.subject;
+
+    // Fetch top-level documents (no parent)
+    return await ctx.db
+      .query("documents")
+      .withIndex("by_user_parent", (q) =>
+        q.eq("userId", userId).eq("parentDocument", undefined)
+      )
+      .collect();
+  },
+});

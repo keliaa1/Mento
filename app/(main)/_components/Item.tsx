@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown, ChevronRight, LucideIcon, MoreHorizontal, Plus } from "lucide-react";
+import { ChevronDown, ChevronRight, LucideIcon, MoreHorizontal, Plus, Trash } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -113,7 +113,21 @@ export const Item = ({
                 <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
                 </div>
 
+
+
             </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-60"
+              align="start"
+              side="right"
+              forceMount
+            >
+              <DropdownMenuItem onClick={()=>{}}>
+                <Trash className="mr-2 h-4 w-4" />
+                Delete
+              </DropdownMenuItem>
+
+            </DropdownMenuContent>
           </DropdownMenu>
           <div
             className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:bg-neutral-600"
