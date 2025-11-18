@@ -1,13 +1,20 @@
 "use client";
-import { ChevronDown, ChevronRight, LucideIcon, Plus } from "lucide-react";
+import { ChevronDown, ChevronRight, LucideIcon, MoreHorizontal, Plus } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
-import {api} from "@/convex/_generated/api";
+import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
 import { on } from "events";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 
 interface ItemProps {
   id?: Id<"documents">;
@@ -35,8 +42,8 @@ export const Item = ({
   onClick,
   icon: Icon,
 }: ItemProps) => {
-    const router = useRouter();
-    const create = useMutation(api.document.create);
+  const router = useRouter();
+  const create = useMutation(api.document.create);
   const handleExpand = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -44,25 +51,23 @@ export const Item = ({
     onExpand?.();
   };
 
-  const onCreate = (
-    event:React.MouseEvent<HTMLDivElement, MouseEvent>
-
-  )=>{
+  const onCreate = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
-    if(!id) return;
-    const promise = create({title:"Untitled",parentDocument:id})
-    .then((documentId)=>{
-        if(!expanded){
-            onExpand?.();
+    if (!id) return;
+    const promise = create({ title: "Untitled", parentDocument: id }).then(
+      (documentId) => {
+        if (!expanded) {
+          onExpand?.();
         }
         // router.push(`/document/${documentId}`);
-    });
+      }
+    );
     toast.promise(promise, {
-        loading:"creating a new note",
-        success:"created!",
-        error:"Failed to create"
-    })
-  }
+      loading: "creating a new note",
+      success: "created!",
+      error: "Failed to create",
+    });
+  };
 
   const ChevronIcon = expanded ? ChevronDown : ChevronRight;
   return (
@@ -95,16 +100,28 @@ export const Item = ({
           <span className="text-xs">CTRL</span>k
         </kbd>
       )}
-      {!!id &&(
-
+      {!!id && (
         <div className="ml-auto flex items-center gap-x-2">
-            <div className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:bg-neutral-600"
+          <DropdownMenu>
+            <DropdownMenuTrigger
+            onClick={(e)=>e.stopPropagation()}
+            asChild
+            >
+                <div role="button"
+                className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-900 "
+                >
+                <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+                </div>
+
+            </DropdownMenuTrigger>
+          </DropdownMenu>
+          <div
+            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:bg-neutral-600"
             role="button"
             onClick={onCreate}
-            >
-                <Plus className="h-4 w-4 text-muted-foreground" />
-
-            </div>
+          >
+            <Plus className="h-4 w-4 text-muted-foreground" />
+          </div>
         </div>
       )}
     </div>
