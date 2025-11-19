@@ -157,7 +157,11 @@ const Navigation = () => {
             <PopoverTrigger className="w-full mt-4">
             <Item label="Archive" icon={Trash} />
             </PopoverTrigger>
-            
+            <PopoverContent className="p-0 w-72"
+            side={isMobile?"bottom":"right"}
+            >
+              <p>Trash box</p>
+            </PopoverContent>
           </Popover>
         </div>
         <div
