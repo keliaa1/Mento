@@ -46,6 +46,21 @@ export const Item = ({
   const {user} = useUser();
   const router = useRouter();
   const create = useMutation(api.document.create);
+  const archive = useMutation(api.document.archive);
+
+  const onArchive =(
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  )=>{
+    event.stopPropagation();
+    if(!id) return;
+    const promise = archive({id});
+
+    toast.promise(promise, {
+      loading:"Archiving...",
+      success:"Archived!",
+      error:"Failed to archive"
+    });
+  }
   const handleExpand = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -124,7 +139,7 @@ export const Item = ({
               side="right"
               forceMount
             >
-              <DropdownMenuItem onClick={()=>{}}>
+              <DropdownMenuItem onClick={onArchive}>
                 <Trash className="mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>
