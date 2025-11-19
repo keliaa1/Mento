@@ -6,6 +6,7 @@ import {
   PlusCircle,
   Search,
   Settings,
+  Trash,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, use, useEffect, useRef, useState } from "react";
@@ -18,6 +19,11 @@ import { cn } from "@/lib/utils";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./Item";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent
+} from "@/components/ui/popover";
 const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -147,6 +153,12 @@ const Navigation = () => {
         <div className="mt-4">
           <DocumentList />
           <Item onClick={handleCreate} label="Create new page" icon={Plus} />
+          <Popover>
+            <PopoverTrigger className="w-full mt-4">
+            <Item label="Archive" icon={Trash} />
+            </PopoverTrigger>
+            
+          </Popover>
         </div>
         <div
           onMouseDown={handleMouseDown}
