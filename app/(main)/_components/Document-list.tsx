@@ -33,17 +33,20 @@ export const DocumentList = ({
   const onRedirect = (documentId: string) => {
     router.push(`/document/${documentId}`);
   };
-if (document === undefined){
-    <>
+  
+  if (documents === undefined) {
+    return (
+      <>
         <Item.Skeleton level={level} />
-        {level ===0 && (
-            <>
+        {level === 0 && (
+          <>
             <Item.Skeleton level={level} />
             <Item.Skeleton level={level} />
-            </>
+          </>
         )}
-    </>
-}
+      </>
+    );
+  }
   return (
     <>
     <p style={{paddingLeft: level? `${(level*12)+25}px` : "12px"}} className={cn("text-sm hidden font-medium text-muted-foreground",
