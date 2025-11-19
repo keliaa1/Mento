@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
 import { on } from "events";
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
@@ -42,6 +43,7 @@ export const Item = ({
   onClick,
   icon: Icon,
 }: ItemProps) => {
+  const {user} = useUser();
   const router = useRouter();
   const create = useMutation(api.document.create);
   const handleExpand = (
@@ -126,6 +128,12 @@ export const Item = ({
                 <Trash className="mr-2 h-4 w-4" />
                 Delete
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <div className="text-xs text-muted-foreground p-2">
+                Last edited by: {user?.fullName}
+              </div>
+
+
 
             </DropdownMenuContent>
           </DropdownMenu>
