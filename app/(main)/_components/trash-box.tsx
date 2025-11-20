@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { Id } from "@/convex/_generated/dataModel";
 import { toast } from "sonner";
+import { Spinner } from "@/components/spinner";
 
 const TrashBox = () => {
     const router = useRouter();
@@ -51,6 +52,14 @@ const TrashBox = () => {
         if (params.documentId === documentId) {
             router.push("/documents");
         }
+    };
+
+    if (documents === undefined) {
+        return(
+            <div className="flex h-full items-center justify-center p-4">
+                <Spinner size="lg" />
+            </div>
+        )
     }
 
     return (
