@@ -38,6 +38,20 @@ const TrashBox = () => {
         })
     }
 
+    const onRemove = (
+        documentId: Id<"documents">,
+    )=>{
+        const promise = remove({id: documentId});
+
+        toast.promise(promise, {
+            loading:"Deleting...",
+            success:"Deleted!",
+            error:"Failed to delete"
+        });
+        if (params.documentId === documentId) {
+            router.push("/documents");
+        }
+    }
 
     return (
         <div>
