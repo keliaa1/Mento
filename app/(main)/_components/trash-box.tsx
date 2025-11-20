@@ -16,7 +16,11 @@ const TrashBox = () => {
 
     const filteredDocuments = documents?.filter((document)=>{
         return document.title.toLowerCase().includes(search.toLowerCase());
-    })
+    });
+
+    const onClick = (documentId:string)=>{
+        router.push(`/documents/${documentId}`);
+    }
 
     return (
         <div>
