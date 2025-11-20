@@ -93,7 +93,7 @@ const TrashBox = () => {
                 <Undo />
 
             </div>
-            <ConfirmModal onconfirm={() => onRemove(document._id)}>
+            <ConfirmModal onConfirm={() => onRemove(document._id)}>
             <div
             role="button"
             className="rounded-sm p-2 hover:bg-neutral-200"
