@@ -126,8 +126,27 @@ export const restore = mutation({
       throw new Error("Document not found");
     }
 
-    if(!existingDocument.userId !== userId){
+    if(existingDocument.userId !== userId){
       throw new Error("Unauthorized");
+    }
+
+    const recursiveRestore = async (documentId: Id<"documents">)=>{
+      const children = await ctx.db
+      .query("documents")
+      .withIndex("by_user_parent", (q)=>(
+        q
+        .eq("userId", userId)
+        .eq("parentDocument", documentId)
+      ))
+      .collect();
+
+      for (const child of children){
+        await ctx.db.patch(child._id, {
+          isArchived:false,
+        });
+
+        await recursiveRestore(child._id);
+      }
     }
     const options : Partial<Doc<"documents">> = {
       isArchived: false,
