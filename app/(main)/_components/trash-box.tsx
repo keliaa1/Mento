@@ -94,7 +94,7 @@ const TrashBox = () => {
             </div>
             <div
             role="button"
-            className="rounded-sm p-2"
+            className="rounded-sm p-2 hover:bg-neutral-200"
             >
                 <Trash className="h-4 w-4 text-muted-foreground" />
             </div>
