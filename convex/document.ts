@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { Id } from "./_generated/dataModel";
+import { Id, Doc } from "./_generated/dataModel";
 
 export const create = mutation({
   args: {
@@ -108,11 +108,11 @@ export const getTrash = query({
       .collect();
 
     return documents;
-  }
+  },
 });
 
 export const restore = mutation({
-  args: {id: v.id("documents")},
+  args: { id: v.id("documents") },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -122,45 +122,43 @@ export const restore = mutation({
     const userId = identity.subject;
     const existingDocument = await ctx.db.get(args.id);
 
-    if(!existingDocument){
+    if (!existingDocument) {
       throw new Error("Document not found");
     }
 
-    if(existingDocument.userId !== userId){
+    if (existingDocument.userId !== userId) {
       throw new Error("Unauthorized");
     }
 
-    const recursiveRestore = async (documentId: Id<"documents">)=>{
+    const recursiveRestore = async (documentId: Id<"documents">) => {
       const children = await ctx.db
-      .query("documents")
-      .withIndex("by_user_parent", (q)=>(
-        q
-        .eq("userId", userId)
-        .eq("parentDocument", documentId)
-      ))
-      .collect();
+        .query("documents")
+        .withIndex("by_user_parent", (q) =>
+          q.eq("userId", userId).eq("parentDocument", documentId)
+        )
+        .collect();
 
-      for (const child of children){
+      for (const child of children) {
         await ctx.db.patch(child._id, {
-          isArchived:false,
+          isArchived: false,
         });
 
         await recursiveRestore(child._id);
       }
-    }
-    const options : Partial<Doc<"documents">> = {
+    };
+    const options: Partial<Doc<"documents">> = {
       isArchived: false,
     };
 
-    if (existingDocument.parentDocument){
+    if (existingDocument.parentDocument) {
       const parent = await ctx.db.get(existingDocument.parentDocument);
 
-      if(parent?.isArchived){
-        options.parentDocument=undefined;
+      if (parent?.isArchived) {
+        options.parentDocument = undefined;
       }
     }
 
     await ctx.db.patch(args.id, options);
     return existingDocument;
-  }
-})
+  },
+});
