@@ -4,6 +4,8 @@ import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { Id } from "@/convex/_generated/dataModel";
+import { toast } from "sonner";
 
 const TrashBox = () => {
     const router = useRouter();
@@ -21,6 +23,21 @@ const TrashBox = () => {
     const onClick = (documentId:string)=>{
         router.push(`/documents/${documentId}`);
     }
+
+    const onRestore = (
+        event:React.MouseEvent<HTMLDivElement, MouseEvent>,
+        documentId: Id<"documents">,
+    )=>{
+        event.stopPropagation();
+        const promise = restore ({id: documentId});
+
+        toast.promise(promise, {
+            loading:"Restoring...",
+            success:"Restored!",
+            error:"Failed to restore"
+        })
+    }
+
 
     return (
         <div>
