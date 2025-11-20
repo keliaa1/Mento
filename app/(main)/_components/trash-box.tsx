@@ -1,4 +1,23 @@
+"use client"
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
 const TrashBox = () => {
+    const router = useRouter();
+    const params = useParams();
+    const documents = useQuery(api.document.getTrash);
+    const restore = useMutation(api.document.restore);
+    const remove = useMutation(api.document.remove);
+
+    const [search, setSearch] = useState("");
+
+    const filteredDocuments = documents?.filter((document)=>{
+        return document.title.toLowerCase().includes(search.toLowerCase());
+    })
+
     return (
         <div>
             TrashBox
