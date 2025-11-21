@@ -16,3 +16,9 @@ import{
 }from "@/components/ui/command";
 import { useSearch } from "@/Hooks/use-search";
 import { api } from "@/convex/_generated/api";
+
+export const SearchCommand = ()=>{
+    const{user} = useUser();
+    const router = useRouter();
+    const documents = useQuery();
+}
