@@ -20,5 +20,16 @@ import { api } from "@/convex/_generated/api";
 export const SearchCommand = ()=>{
     const{user} = useUser();
     const router = useRouter();
-    const documents = useQuery();
+    const documents = useQuery(api.document.getSearch);
+
+    const [isMounted, setIsMounted] = useState(false);
+    const toggle = useSearch((store)=>store.toggle);
+    const isOpen = useSearch((store)=>store.isOpen);
+    const onClose = useSearch((store)=>store.onClose);
+
+    useEffect(()=>{
+        setIsMounted(true);
+
+    }, []);
+
 }
