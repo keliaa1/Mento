@@ -6,6 +6,8 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { MenuIcon } from "lucide-react";
 
+import Title from "./title";
+
 interface NavbarProps {
     isCollapsed: boolean;
     onResetWidth: () => void;
@@ -34,7 +36,7 @@ export const Navbar = ({isCollapsed, onResetWidth}:NavbarProps) => {
                 />
                 )}
                 <div className="flex items-center juston-center w-full">
-                    Navbar
+                    <Title initialData={document} />
                 </div>
 
         </nav>
