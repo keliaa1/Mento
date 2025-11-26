@@ -16,14 +16,13 @@ const Banner = ({ documentId }: BannerProps) => {
   const restore = useMutation(api.document.restore);
 
   const onRemove = () => {
-    const promise = remove({ id: documentId }).then(() => {
-      router.push("/documents");
-    });
+    const promise = remove({ id: documentId })
     toast.promise(promise, {
       loading: "Removing...",
       success: "Removed!",
       error: "Failed to remove",
     });
+    router.push("/documents");
   };
 
   const onRestore = () => {
