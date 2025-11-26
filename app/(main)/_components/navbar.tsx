@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { MenuIcon } from "lucide-react";
+import Banner from "./banner";
 
 import Title from "./title";
 
@@ -24,6 +25,7 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
       <nav className="bg-background dark:bg-[1F1F1F] px-3 py-2 w-full items-center">
         <Title.Skeleton />
       </nav>
+
     );
   }
   if (document === null) {
@@ -31,6 +33,7 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
   }
 
   return (
+    <>
     <nav className="bg-background dark:bg-[1F1F1F] px-3 py-2 w-full items-center gap-x-4">
       {isCollapsed && (
         <MenuIcon
@@ -43,5 +46,9 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
         <Title initialData={document} />
       </div>
     </nav>
+    {document.isArchived && (
+        <Banner documentId={document._id} />
+    )}
+    </>
   );
 };
