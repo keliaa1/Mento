@@ -76,7 +76,8 @@ export const Item = ({
         if (!expanded) {
           onExpand?.();
         }
-        // router.push(`/document/${documentId}`);
+        router.push(`/document/${documentId}`);
+
       }
     );
     toast.promise(promise, {
