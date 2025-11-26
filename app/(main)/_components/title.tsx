@@ -70,3 +70,9 @@ const onKeyDown=(event:React.KeyboardEvent<HTMLInputElement>)=>{
 }
 
 export default Title;
+
+Title.Skeleton = function TitleSkeleton() {
+    return (
+        <div className="h-6 w-32 rounded-md bg-muted/50 animate-pulse" />
+    );
+}
