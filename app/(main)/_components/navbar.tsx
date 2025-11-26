@@ -1,9 +1,14 @@
-const Navbar = () => {
-    return (
-        <div>
-            Navbar
-        </div>
-     );
+"use client";
+
+interface NavbarProps {
+    isCollapsed: boolean;
+    onResetWidth: () => void;
 }
 
-export default Navbar;
+export const Navbar = ({isCollapsed, onResetWidth}:NavbarProps) => {
+    return (
+        <div>
+        Hello
+        </div>
+    )
+}
