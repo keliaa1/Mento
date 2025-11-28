@@ -2,7 +2,7 @@
 import { Doc } from "@/convex/_generated/dataModel";
 import { IconPicker } from "./icon-picker";
 import { Button } from "@/components/ui/button";
-import { Divide, Icon, Smile, X } from "lucide-react";
+import { Divide, Icon, ImageIcon, Smile, X } from "lucide-react";
 interface ToolbarProps {
   initialData: Doc<"documents">;
   preview?: boolean;
@@ -36,7 +36,7 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
       {initialData.icon}
     </p>
     )}
-    <div className="opacity-100 group-hover:opacity-100 flex items-center gap-x-1 py-4">
+    <div className="opacity-0 group-hover:opacity-100 flex items-center gap-x-1 py-4">
       {!initialData.icon && !preview && (
       <IconPicker asChild onChange={() => {}}>
         <Button
@@ -49,6 +49,17 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
         </Button>
         </IconPicker>
       )}
+      {!initialData.coverImage && !preview && (
+        <Button
+        className="text-muted-foreground text-xs"
+        variant="outline"
+        size="sm"
+        onClick={()=>{}}
+        >
+          <ImageIcon className="h-4 w-4 mr-2" />
+          Add Cover
+        </Button>
+        )}
     </div>
     </div>
   );
