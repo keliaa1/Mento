@@ -1,24 +1,21 @@
+"use client";
+
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
 import Toolbar from "@/components/toolbar";
+import { useParams } from "next/navigation";
+import { Id } from "@/convex/_generated/dataModel";
 
-interface DocumentIdPageProps {
-  params: {
-    documentId: Id<"documents">;
-  };
-}
+const DocumentIdPage = () => {
+  const params = useParams();
 
-const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
   const document = useQuery(api.document.getById, {
-    documentId: params.documentId,
+    documentId: params.documentId as Id<"documents">, // cast if TS complains
   });
-  if (document === undefined) {
-    return <div>Loading...</div>;
-  }
-  if (document === null) {
-    return <div>Document not found</div>;
-  }
+
+  if (document === undefined) return <div>Loading...</div>;
+  if (document === null) return <div>Document not found</div>;
+
   return (
     <div className="pb-40">
       <div className="h-[35vh]" />
