@@ -1,14 +1,47 @@
 "use client";
 import { Doc } from "@/convex/_generated/dataModel";
+import { api } from "@/convex/_generated/api";
+import TextareaAutosize from "react-textarea-autosize";
+import { useRef, useState, ElementRef } from "react";
 import { IconPicker } from "./icon-picker";
 import { Button } from "@/components/ui/button";
 import { Divide, Icon, ImageIcon, Smile, X } from "lucide-react";
+import { useMutation } from "convex/react";
 interface ToolbarProps {
   initialData: Doc<"documents">;
   preview?: boolean;
 }
 
 const Toolbar = ({ initialData, preview }: ToolbarProps) => {
+  const inputRef = useRef<ElementRef<"textarea">>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [value, setValue] = useState(initialData.title);
+
+  const update = useMutation(api.document.update);
+
+  const enableInput=()=>{
+    if(preview) return;
+    setIsEditing(true);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
+  };
+
+  const disableInput=()=>setIsEditing(false);
+  const onInput = (value:string)=>{
+    setValue(value);
+    update({
+      id: initialData._id,
+      title: value || "Untitled Document",
+    });
+  };
+
+  const onKeyDown = (e:React.KeyboardEvent<HTMLTextAreaElement>)=>{
+    if(e.key === "Enter"){
+      e.preventDefault();
+      disableInput();
+    }};
+
   return (
     <div className="pl-[54px] group relative">
       {!!initialData.icon && !preview && (
@@ -61,8 +94,23 @@ const Toolbar = ({ initialData, preview }: ToolbarProps) => {
         </Button>
         )}
     </div>
+        {isEditing && !preview ? (
+        <TextareaAutosize
+        ref={inputRef}
+        onKeyDown={onKeyDown}
+        value={value}
+        onChange={(e)=>onInput(e.target.value)}
+        className="text-5xl bg-transparent font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF] resize-none"
+        />
+        ):(
+          <div onClick={enableInput}
+          className="pb-[11.5px] text-5xl font-bold break-words outline-none"
+          >
+            {initialData.title}
+
+          </div>
+        )}
     </div>
   );
 };
-
 export default Toolbar;
