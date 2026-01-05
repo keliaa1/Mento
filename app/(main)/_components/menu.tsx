@@ -30,7 +30,7 @@ const Menu = ({documentId}:MenuProps) => {
     }
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
                 <Button
                 size="sm"
                 variant="ghost"
