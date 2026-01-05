@@ -10,8 +10,8 @@ import {
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
-import { ProgressCircle } from './progress-circle';
-import { formatFileSize, useUploader } from './uploader-provider';
+import { ProgressCircle } from './upload/progress-circle';
+import { formatFileSize, useUploader } from './upload/uploader-provider';
 import { Spinner } from './spinner';
 
 /* ---------------------------------- Styles --------------------------------- */
@@ -28,7 +28,6 @@ const DROPZONE_VARIANTS = {
   reject: 'border-red-500 dark:border-red-400 bg-red-100 dark:bg-red-900/30',
 };
 
-/* ---------------------------------- Props ---------------------------------- */
 
 export interface SingleImageDropzoneProps {
   width?: number;
