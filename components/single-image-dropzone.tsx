@@ -11,6 +11,7 @@ import * as React from 'react';
 import { useDropzone, type DropzoneOptions } from 'react-dropzone';
 import { ProgressCircle } from './progress-circle';
 import { formatFileSize, useUploader } from './uploader-provider';
+import { Spinner } from './spinner';
 
 const DROPZONE_VARIANTS = {
   base: 'relative rounded-md p-4 flex justify-center items-center flex-col cursor-pointer min-h-[150px] min-w-[200px] border-2 border-dashed border-gray-400 dark:border-gray-600 transition-colors duration-200 ease-in-out',
@@ -32,15 +33,9 @@ const DROPZONE_VARIANTS = {
  */
 export interface SingleImageDropzoneProps
   extends React.HTMLAttributes<HTMLInputElement> {
-  /**
-   * The width of the dropzone area in pixels.
-   */
-  width: number;
 
-  /**
-   * The height of the dropzone area in pixels.
-   */
-  height: number;
+  width?: number;
+  height?: number;
 
   /**
    * Whether the dropzone is disabled.
@@ -165,7 +160,12 @@ const SingleImageDropzone = React.forwardRef<
   const errorMessage = error ?? fileState?.error;
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
+      {disabled && (
+        <div className="absolute inset-y-0 h-full w-full bg-background/80 flex items-center justify-center z-50">
+          <Spinner size="lg" />
+        </div>
+      )}
       <div
         {...getRootProps({
           className: dropZoneClassName,
@@ -193,7 +193,7 @@ const SingleImageDropzone = React.forwardRef<
           >
             <UploadCloudIcon className="mb-1 h-7 w-7" />
             <div className="font-medium">
-              drag & drop an image or click to select
+              Click or drag file to upload
             </div>
             {maxSize && (
               <div className="text-xs">Max size: {formatFileSize(maxSize)}</div>
