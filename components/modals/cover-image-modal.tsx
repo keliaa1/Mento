@@ -25,6 +25,11 @@ import { Id } from "@/convex/_generated/dataModel";
     const coverImage = useCoverImageStore();
     const {edgestore} = useEdgeStore();
 
+    const onClose = ()=>{
+        setFile(undefined);
+        setIsSubmitting(false);
+        coverImage.onClose();
+    }
     const onChange = async (file?:File)=>{
         if (file) {
             setIsSubmitting(true);
@@ -37,7 +42,9 @@ import { Id } from "@/convex/_generated/dataModel";
             await update({
                 id: params.documentId as Id<"documents">,
                 converImage: res.url
-            })
+            });
+
+            onClose();
         }
     }
 
@@ -47,9 +54,13 @@ import { Id } from "@/convex/_generated/dataModel";
                 <DialogHeader>
                     <h2 className="text-center text-lg font-semibold">Cover Image</h2>
                 </DialogHeader>
-                <div>
-                    TODO: Upload image
-                </div>
+                <SingleImageDropzone
+                className="w-full outline-none"
+                disabled={isSubmitting}
+                value = {file}
+                onChange={onChange}
+
+                />
             </DialogContent>
         </Dialog>
     )
