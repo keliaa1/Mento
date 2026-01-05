@@ -57,8 +57,7 @@ import { Id } from "@/convex/_generated/dataModel";
                 <SingleImageDropzone
                 className="w-full outline-none"
                 disabled={isSubmitting}
-                value = {file}
-                onChange={onChange}
+                onFileChange={onChange}
 
                 />
             </DialogContent>
