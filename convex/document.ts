@@ -235,7 +235,7 @@ export const update = mutation({
     id:v.id("documents"),
     title: v.optional(v.string()),
     content: v.optional(v.string()),
-    converImage: v.optional(v.string()),
+    coverImage: v.optional(v.string()),
     icon: v.optional(v.string()),
     isPublished: v.optional(v.boolean()),
   },
@@ -264,7 +264,7 @@ export const update = mutation({
 })
 
 export const removeIcon = mutation({
-  handler:async(ctx, args)=>{
+  handler:async(ctx, args: {id: Id<"documents">})=>{
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
       throw new Error("Not authenticated!");

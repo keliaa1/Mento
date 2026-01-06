@@ -41,7 +41,7 @@ import { Id } from "@/convex/_generated/dataModel";
 
             await update({
                 id: params.documentId as Id<"documents">,
-                converImage: res.url
+                coverImage: res.url
             });
 
             onClose();
