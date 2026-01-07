@@ -3,11 +3,13 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { ImageIcon, X } from "lucide-react";
+import { useCoverImageStore } from "@/Hooks/use-cover-image";
 interface CoverImageProps{
     url?: string;
     preview?: boolean;
 }
 export const Cover = ({url, preview}: CoverImageProps)=>{
+    const coverImage= useCoverImageStore();
     return(
         <div className={cn(
             "relative w-full h-[35vh] group",
@@ -26,7 +28,7 @@ export const Cover = ({url, preview}: CoverImageProps)=>{
            {url && !preview &&(
             <div className="opacity-0 group-hover:opacity-100 absolute bottom-5 right-5 flex items-center gap-x-2">
                 <Button
-                onClick={()=>{}}
+                onClick={coverImage.onOpen}
                 variant="outline"
                 size="sm"
                 className="text-muted-foreground text-xs"
