@@ -17,6 +17,7 @@ export const Cover = ({url, preview}: CoverImageProps)=>{
             src={url}
             alt="Cover Image"
             fill
+            unoptimized
             className="object-cover"
             />
            )}
