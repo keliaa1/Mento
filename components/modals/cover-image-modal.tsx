@@ -8,6 +8,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+
 import { useCoverImageStore } from "@/Hooks/use-cover-image";
 import { SingleImageDropzone } from "@/components/single-image-dropzone";
 import { useState } from "react";
@@ -64,6 +65,9 @@ export const CoverImageModal = () => {
     >
       <DialogContent>
         <DialogHeader>
+
+          <DialogTitle>Change Cover Image</DialogTitle>
+
           <h2 className="text-center text-lg font-semibold">Cover Image</h2>
         </DialogHeader>
         <SingleImageDropzone
