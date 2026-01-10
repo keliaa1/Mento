@@ -18,9 +18,9 @@ interface CoverImageProps {
 
 export const Cover = ({ url, preview }: CoverImageProps) => {
   const { edgestore } = useEdgeStore();
-  const { id } = useParams();
+  const params = useParams();
   const coverImage = useCoverImageStore();
-  const documentId = typeof id === "string" ? (id as Id<"documents">) : null;
+  const documentId = typeof params.documentId === "string" ? (params.documentId as Id<"documents">) : null;
   const removeCoverImage = useMutation(api.document.removeCoverImage);
 
   const onRemove = async () => {
