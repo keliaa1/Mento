@@ -20,24 +20,28 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
   const { edgestore } = useEdgeStore();
   const { id } = useParams();
   const coverImage = useCoverImageStore();
-  const documentId =
-    typeof id === "string" ? (id as Id<"documents">) : null;
+  const documentId = typeof id === "string" ? (id as Id<"documents">) : null;
   const removeCoverImage = useMutation(api.document.removeCoverImage);
 
   const onRemove = async () => {
     if (!documentId) return;
-    
+
     if (url) {
       await edgestore.publicFiles.delete({
         url: url,
       });
     }
-    
     await removeCoverImage({ id: documentId });
   };
 
   return (
-    <div className={cn("relative w-full h-[35vh] group", !url && "h-[12vh]", url && "bg-muted")}>
+    <div
+      className={cn(
+        "relative w-full h-[35vh] group",
+        !url && "h-[12vh]",
+        url && "bg-muted"
+      )}
+    >
       {!!url && (
         <Image
           src={url}
