@@ -28,7 +28,9 @@ import {
 import TrashBox from "./trash-box";
 import { useSearch } from "@/Hooks/use-search";
 import { useSettings } from "@/Hooks/use-settings";
+import { useRouter } from "next/navigation";
 const Navigation = () => {
+  const router = useRouter();
   const settings = useSettings();
   const search = useSearch();
   const params = useParams();
@@ -122,7 +124,8 @@ const Navigation = () => {
   };
 
   const handleCreate = () => {
-    const promise = create({ title: "Untitled" });
+    const promise = create({ title: "Untitled" })
+    .then((documentId)=>router.push(`/documents/${documentId}`));
 
     toast.promise(promise, {
       loading: "creating...",
