@@ -7,9 +7,12 @@ import { useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
 import { Cover } from "@/components/Cover";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Editor } from "@/components/editor";
+import { useMemo } from "react";
+import dynamic from "next/dynamic";
 import { useCallback } from "react";
 const DocumentIdPage = () => {
+
+  const Editor = useMemo(()=>dynamic(()=>import('@/components/editor'), {ssr:false}), []);
   const params = useParams();
 
   const document = useQuery(api.document.getById, {
