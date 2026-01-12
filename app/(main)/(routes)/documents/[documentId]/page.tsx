@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Toolbar from "@/components/toolbar";
 import { useParams } from "next/navigation";
@@ -8,27 +8,42 @@ import { Id } from "@/convex/_generated/dataModel";
 import { Cover } from "@/components/Cover";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Editor } from "@/components/editor";
+import { useCallback } from "react";
 const DocumentIdPage = () => {
   const params = useParams();
 
   const document = useQuery(api.document.getById, {
     documentId: params.documentId as Id<"documents">, // cast if TS complains
   });
-
-  if (document === undefined) return(
-    <div>
-      <Cover.Skeleton />
-      <div className="md:max-w-3xl lg:max-w-4xl mx-auto mt-10">
-        <div className="space-y-4 pl-8 pt-4">
-          <Skeleton className="h-14 w-[50%]" />
-          <Skeleton className="h-4 w-[80%]" />
-          <Skeleton className="h-4 w-[40%]" />
-          <Skeleton className="h-4 w-[60%]" />
+  const update = useMutation(api.document.update);
+  const onChange = useCallback(async (content: string) => {
+    // Make it async for better handling
+    // console.log("onChange called with content:", content); // Log the payload
+    try {
+      await update({
+        // Await the mutation
+        id: params.documentId as Id<"documents">,
+        content,
+      });
+      console.log("Mutation succeeded!"); // If this logs, save worked
+    } catch (error) {
+      console.error("Mutation failed:", error); // Catch silent failures (e.g., validation errors)
+    }
+  }, [update, params.documentId]);
+  if (document === undefined)
+    return (
+      <div>
+        <Cover.Skeleton />
+        <div className="md:max-w-3xl lg:max-w-4xl mx-auto mt-10">
+          <div className="space-y-4 pl-8 pt-4">
+            <Skeleton className="h-14 w-[50%]" />
+            <Skeleton className="h-4 w-[80%]" />
+            <Skeleton className="h-4 w-[40%]" />
+            <Skeleton className="h-4 w-[60%]" />
+          </div>
         </div>
-
       </div>
-    </div>
-  )
+    );
   if (document === null) return <div>Document not found</div>;
 
   return (
@@ -36,10 +51,7 @@ const DocumentIdPage = () => {
       <Cover url={document.coverImage} />
       <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
         <Toolbar initialData={document} />
-        <Editor
-        onChange={()=>{}}
-        initialContent={document.content}
-        />
+        <Editor onChange={onChange} initialContent={document.content} editable={true} />
       </div>
     </div>
   );
