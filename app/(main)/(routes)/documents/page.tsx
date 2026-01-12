@@ -6,11 +6,14 @@ import Image from "next/image";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 const documents = () => {
+    const router = useRouter();
     const {user}= useUser();
     const create = useMutation(api.document.create);
     const onCreate = async () => {
-        const promise = create({title:"Untitled"});
+        const promise = create({title:"Untitled"})
+        .then((documentId)=>router.push(`/documents/${documentId}`));
 
         toast.promise(promise, {
             loading:"creating...",
