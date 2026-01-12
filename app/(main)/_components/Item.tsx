@@ -16,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import Router from "next/navigation";
 
 interface ItemProps {
   id?: Id<"documents">;
@@ -43,6 +44,7 @@ export const Item = ({
   onClick,
   icon: Icon,
 }: ItemProps) => {
+
   const {user} = useUser();
   const router = useRouter();
   const create = useMutation(api.document.create);
@@ -53,7 +55,8 @@ export const Item = ({
   )=>{
     event.stopPropagation();
     if(!id) return;
-    const promise = archive({id});
+    const promise = archive({id})
+    .then(()=> router.push("/documents"));
 
     toast.promise(promise, {
       loading:"Archiving...",
