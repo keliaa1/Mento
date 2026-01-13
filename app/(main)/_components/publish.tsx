@@ -1,6 +1,11 @@
 "use client";
+import { Doc } from "@/convex/_generated/dataModel";
 
-export default function Publish() {
+interface PublishProps{
+    initialData: Doc<"documents">;
+}
+
+export default function Publish({ initialData }: PublishProps) {
   return (
     <div>Publish</div>
   );
