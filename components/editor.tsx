@@ -34,8 +34,7 @@ const Editor = ({ onChange, initialContent, editable = true }: EditorProps) => {
   });
 
   if (!editor) {
-
-    return <div>Loading editor...http://104.8.233.169:8081/</div>;
+    return <div>Loading editor...</div>;
   }
 
   return (

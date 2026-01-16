@@ -40,7 +40,7 @@ const documents = () => {
             alt="Mento"
             className="hidden dark:block"
             />
-            <h2 className="text-lg font-medium mb-2">
+            <h2 className="text-lg font-medium mb-2 dark:text-white">
                 Welcome to {user?.firstName}&apos;s Mento!
             </h2>
             <Button onClick={onCreate}>
